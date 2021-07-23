@@ -42,7 +42,7 @@ export default {
             this.viewing =  true;
             this.isLoading = true;
             await Axios.get(this.field.url).then((response) => {
-                 window.open(file_url,'_blank');
+                 window.open(response.headers["file-url"],'_blank');
             }).catch((err)=>console.log(err));
             this.isLoading = false;
             this.viewing = false;
