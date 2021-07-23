@@ -43,7 +43,7 @@ Route::get('/pod', function () {
     public function fields(Request $request)
     {
      return [
-            DownloadButton::make("Buttons")
+            DownloadButton::make("")
             ->url("http://haythem.test/api/pod")
             ->downloadButtonText("Download Pod")
             ->showViewButtonText("View pod")
