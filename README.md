@@ -3,12 +3,9 @@
 [![Packagist](https://img.shields.io/packagist/v/haythem/download-button.svg)](https://packagist.org/packages/haythem/)
 [![Packagist](https://img.shields.io/packagist/l/haythem/download-button.svg)](https://packagist.org/packages/haythem/download-button)
 
-Package Description: Download button nova field
+Package Description: Download , View , Print buttons nova field
  
 
-![](download-button-1.png)
-
-![](download-button-2.png)
 
 
 ## Installation
@@ -32,6 +29,7 @@ Route::get('/pod', function () {
         'Content-Disposition' => 'inline;',//Required
         'File-Name'=>$file_name,//Required
         "File-Url"=>$file_url,//Required
+        "File-Type"=>"pdf",//Required
     ]);
 });
 ```
@@ -47,7 +45,8 @@ Route::get('/pod', function () {
             DownloadButton::make("Buttons")
             ->url("http://haythem.test/api/pod")
             ->downloadButtonText("Download Pod")
-            ->showViewButtonText("View pod"),
+            ->showViewButtonText("View pod")
+            ->showPrintButtonText("Print pod"),
     ];
     }
 ```

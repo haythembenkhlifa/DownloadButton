@@ -2,11 +2,13 @@
             <div class="w-3/4 py-4 break-words" style="display: flex;">
                 <button :disabled="isLoading" class="btn btn-default btn-icon btn-primary mr-3" v-on:click="download()">{{this.field.downloadButtonText || "Download"}} <div v-show="downloading && isLoading" class="ml-1 loader"></div></button>
                 <button v-show="this.field.viewButtonText" :disabled="isLoading" class="btn btn-default btn-icon btn-primary mr-3" v-on:click="view()">{{this.field.viewButtonText || "View"}} <div v-show="viewing && isLoading" class="ml-1 loader"></div></button>
+                <button v-show="this.field.printButtonText" :disabled="isLoading" class="btn btn-default btn-icon btn-primary mr-3" v-on:click="print()">{{this.field.printButtonText || "Print"}} <div v-show="printing && isLoading" class="ml-1 loader"></div></button>
             </div>
 </template>
 
 <script>
 import Axios from 'axios';
+import printJS from 'print-js';
 export default {
     props: ['resourceName', 'field'],
     data() {
@@ -14,6 +16,7 @@ export default {
             isLoading:false,
             downloading:false,
             viewing:false,
+            printing:false,
         }
     },
     methods: {
@@ -31,28 +34,29 @@ export default {
                 fileLink.setAttribute('download',response.headers["file-name"]);
                 document.body.appendChild(fileLink);
                 fileLink.click();
-            });
+            }).catch((err)=>console.log(err));
             this.isLoading = false;
             this.downloading = false;
         },
         async view(){
             this.viewing =  true;
             this.isLoading = true;
-            var file_url = await this.getFileUrl();
-            if(file_url){
-                window.open(file_url,'_blank');
-            }
+            await Axios.get(this.field.url).then((response) => {
+                 window.open(file_url,'_blank');
+            }).catch((err)=>console.log(err));
             this.isLoading = false;
             this.viewing = false;
         },
-        async  getFileUrl() {
-        var response = await Axios.get(this.field.url).then((response) => {
-                return response.headers["file-url"];
-            }).catch((err) => {
-                return null;
-            });
-        return response;
+        async print(){
+            this.printing =  true;
+            this.isLoading = true;
+            await Axios.get(this.field.url).then((response) => {
+                printJS({printable:response.headers["file-url"], type:response.headers["file-type"]});
+            }).catch((err)=>console.log(err));
+            this.isLoading = false;
+            this.printing = false;
         },
+
     },
 }
 </script>
