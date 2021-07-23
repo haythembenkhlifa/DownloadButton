@@ -28,12 +28,11 @@ export default {
                 url: this.field.url,
                 method: 'GET',
                 responseType: 'blob',
-                params: {download:true}
             }).then((response) => {
                 var fileURL = window.URL.createObjectURL(new Blob([response.data]));
                 var fileLink = document.createElement('a');
                 fileLink.href = fileURL;
-                fileLink.setAttribute('download', 'file.pdf');
+                fileLink.setAttribute('download',response.headers["file-name"]);
                 document.body.appendChild(fileLink);
                 fileLink.click();
             });
@@ -52,7 +51,7 @@ export default {
         },
         async  getFileUrl() {
         var response = await Axios.get(this.field.url).then((response) => {
-                return response.data;
+                return response.headers["file-url"];
             }).catch((err) => {
                 return null;
             });

@@ -1658,13 +1658,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 return __WEBPACK_IMPORTED_MODULE_1_axios___default()({
                                     url: this.field.url,
                                     method: 'GET',
-                                    responseType: 'blob',
-                                    params: { download: true }
+                                    responseType: 'blob'
                                 }).then(function (response) {
                                     var fileURL = window.URL.createObjectURL(new Blob([response.data]));
                                     var fileLink = document.createElement('a');
                                     fileLink.href = fileURL;
-                                    fileLink.setAttribute('download', 'file.pdf');
+                                    fileLink.setAttribute('download', response.headers["file-name"]);
                                     document.body.appendChild(fileLink);
                                     fileLink.click();
                                 });
@@ -1731,7 +1730,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                             case 0:
                                 _context3.next = 2;
                                 return __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(this.field.url).then(function (response) {
-                                    return response.data;
+                                    return response.headers["file-url"];
                                 }).catch(function (err) {
                                     return null;
                                 });

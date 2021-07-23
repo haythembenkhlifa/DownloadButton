@@ -19,15 +19,18 @@ composer require haythem/download-button
 ## Setup route
 
 ```
-Route::get('/progressbar', function () {
-    $pdf = PDF::loadView('pod',[])->setWarnings(false)->output();;
-    Storage::disk('public')->put("test.pdf", $pdf);
-    $file_url =     Storage::disk('public')->url("test.pdf");
-    logger(request()->all());
-    if (Arr::has(request()->all(),"download")) {
-        return $pdf;
-    }
-    return $file_url;
+Route::get('/pod', function () {
+    $file_name = "pod.pdf";
+    $file_content = PDF::loadView('pod',[])->setWarnings(false)->output();;
+    Storage::disk('public')->put($file_name, $file_content);
+    $file_url =     Storage::disk('public')->url($file_name);
+
+    return Response::make($file_content, 200, [
+        'Content-Type' => 'application/pdf',//Required
+        'Content-Disposition' => 'inline;',//Required
+        'File-Name'=>$file_name,//Required
+        "File-Url"=>$file_url,//Required
+    ]);
 });
 ```
 
