@@ -2,8 +2,8 @@
          <div class="flex border-b border-40">
              <div class="w-1/4 py-4 mt-2"><h4 class="font-normal text-80">{{this.field.name}}</h4></div>
              <div class="w-3/4 py-4 break-words" style="display: flex;">
-                <button :disabled="isLoading" class="btn btn-default btn-icon btn-primary mr-3" v-on:click="download()">{{this.field.downloadButtonText}} <div v-show="downloading && isLoading" class="ml-1 loader"></div></button>
-                <button :disabled="isLoading" class="btn btn-default btn-icon btn-primary mr-3" v-on:click="view()">{{this.field.viewButtonText}} <div v-show="viewing && isLoading" class="ml-1 loader"></div></button>
+                <button :disabled="isLoading" class="btn btn-default btn-icon btn-primary mr-3" v-on:click="download()">{{this.field.downloadButtonText || "Download"}} <div v-show="downloading && isLoading" class="ml-1 loader"></div></button>
+                <button v-show="this.field.viewButtonText" :disabled="isLoading" class="btn btn-default btn-icon btn-primary mr-3" v-on:click="view()">{{this.field.viewButtonText || "View"}} <div v-show="viewing && isLoading" class="ml-1 loader"></div></button>
              </div>
      </div>
 </template>
