@@ -21,7 +21,7 @@ composer require haythem/download-button
 ```
 Route::get('/pod', function () {
     $file_name = "pod.pdf";
-    $file_content = PDF::loadView('pod',[])->setWarnings(false)->output();;
+    $file_content = PDF::loadView('pod',[])->setWarnings(false)->output();
     Storage::disk('public')->put($file_name, $file_content);
     $file_url =     Storage::disk('public')->url($file_name);
 
