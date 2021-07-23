@@ -6,7 +6,7 @@
 Package Description: Download button nova field
  
 
-![](download-button.png)
+![](download-button-ss.png)
 
 
 ## Installation
